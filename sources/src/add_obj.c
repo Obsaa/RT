@@ -1,4 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   add_obj.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: evanheum <evanheum@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/01/25 11:02:14 by evanheum          #+#    #+#             */
+/*   Updated: 2018/01/31 17:48:42 by oabdalha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <rt.h>
+#define INIT(obj)({obj->refract = 0;obj->reflect = 0;})
 
 void	addsphere(t_rt **rt)
 {
@@ -14,8 +27,10 @@ void	addsphere(t_rt **rt)
 	obj->clr = obj->u.sphere.clr;
 	obj->reflect = 1;
 	obj->refract = 0;
+	obj->transparent = 0;
 	obj->ior = 1.3;
 	obj->io_refl = 1.0;
+	obj->io_trans = 0.9;
 	obj->spec = 0.3;
 	obj->diff = 0.6;
 	obj->amb = 0.2;
@@ -40,8 +55,10 @@ void	addplane(t_rt **rt)
 	obj->clr = obj->u.plane.clr;
 	obj->reflect = 0;
 	obj->refract = 0;
+	obj->transparent = 0;
 	obj->ior = 1.3;
 	obj->io_refl = 1.0;
+	obj->io_trans = 0.9;
 	obj->spec = 0.3;
 	obj->diff = 0.6;
 	obj->amb = 0.2;
@@ -67,8 +84,10 @@ void	addcone(t_rt **rt)
 	obj->clr = obj->u.cone.clr;
 	obj->reflect = 0;
 	obj->refract = 0;
+	obj->transparent = 0;
 	obj->ior = 1.3;
 	obj->io_refl = 1.0;
+	obj->io_trans = 0.9;
 	obj->spec = 0.3;
 	obj->diff = 0.6;
 	obj->amb = 0.2;
@@ -94,8 +113,10 @@ void	addcylin(t_rt **rt)
 	obj->clr = obj->u.cylinder.clr;
 	obj->reflect = 1;
 	obj->refract = 0;
+	obj->transparent = 0;
 	obj->ior = 1.3;
 	obj->io_refl = 1.0;
+	obj->io_trans = 0.9;
 	obj->spec = 0.3;
 	obj->diff = 0.6;
 	obj->amb = 0.2;
@@ -113,17 +134,18 @@ void	addcube(t_rt **rt)
 	obj = (t_obj*)malloc(sizeof(t_obj));
 	obj->type = 5;
 	obj->u.cube.pos = (t_vect){0, 0, 0};
-	obj->u.cube.min = vdiff(obj->u.cube.pos, (t_vect){1, 1, 1}); 
+	obj->u.cube.min = vdiff(obj->u.cube.pos, (t_vect){1, 1, 1});
 	obj->u.cube.max = vadd(obj->u.cube.pos, (t_vect){1, 1, 1});
 	obj->u.cube.len = 1;
 	obj->u.cube.clr = (t_rgb){150, 100, 190};
 	obj->normal = &cube_norm;
 	obj->inter = &findintercube;
 	obj->clr = obj->u.cube.clr;
-	obj->reflect = 0;
-	obj->refract = 0;
+	INIT(obj);
+	obj->transparent = 0;
 	obj->ior = 1.3;
 	obj->io_refl = 1.0;
+	obj->io_trans = 0.9;
 	obj->spec = 0.3;
 	obj->diff = 0.6;
 	obj->amb = 0.2;

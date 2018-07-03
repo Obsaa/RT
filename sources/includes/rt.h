@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eLopez <elopez@42.fr>                      +#+  +:+       +#+        */
+/*   By: eLopez <eLopez@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/21 00:06:40 by eLopez            #+#    #+#             */
-/*   Updated: 2018/01/29 23:50:29 by eLopez           ###   ########.fr       */
+/*   Updated: 2018/01/30 16:59:18 by gguiulfo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,7 +215,6 @@ typedef struct			s_rt
 }						t_rt;
 
 void					multithread(t_rt *rt);
-void					controls(t_rt *rt);
 void					draw(t_rt *rt);
 extern inline void		putpixel(t_rt *rt, int x, int y, t_rgb color);
 int						key_hook(int key, t_rt **rt);
@@ -250,15 +249,15 @@ extern inline t_vect	plane_norm(t_union u, t_vect point);
 extern inline t_vect	cone_norm(t_union u, t_vect point);
 extern inline t_vect	cylinder_norm(t_union u, t_vect point);
 void					*scene(void *rt);
-extern inline t_rgb		colorscalar(t_rgb color, double scalar);
-extern inline t_rgb		coloradd(t_rgb clr1, t_rgb clr2);
-extern inline t_rgb		colormult(t_rgb clr1, t_rgb clr2);
-extern inline t_rgb		coloravg(t_rgb clr1, t_rgb clr2);
+extern inline t_rgb		cscalar(t_rgb color, double scalar);
+extern inline t_rgb		cadd(t_rgb clr1, t_rgb clr2);
+extern inline t_rgb		cmult(t_rgb clr1, t_rgb clr2);
+extern inline t_rgb		cavg(t_rgb clr1, t_rgb clr2);
 void					rt_error(int code);
 void					parsefile(t_rt *rt);
 t_vect					getxyz(const char *line);
 t_rgb					getcolor(const char *line);
-t_rgb					addlight(t_rt *rt, t_ray *intersect, t_obj *obj,
+t_rgb					addlight(t_rt *rt, t_ray *inter, t_obj *obj,
 		t_vect light);
 t_rgb					lighting(t_obj *obj, t_ray *intersect, t_vect light,
 		double shadow);
@@ -274,11 +273,26 @@ int						findintersect(t_ray *intersect, t_ray ray, t_rt *rt);
 void					mod_cylind(int key, t_obj **obj, int toggle);
 void					mod_cube(int key, t_obj **obj, int toggle);
 void					mod_cone(int key, t_obj **obj, int toggle);
-void					inv_filt(char *image);
 void					addsphere(t_rt **rt);
 void					addplane(t_rt **rt);
 void					addcone(t_rt **rt);
 void					addcylin(t_rt **rt);
 void					addcube(t_rt **rt);
+void					inv_filt(char *image);
+void					filter_two(char *image);
+void					filter_six(char *image);
+void					filter_seven(char *image);
+void					good_filter_one(char *image);
+void					greyscale_filter(char *image);
+void					natural_greyscale_filter(char *image);
+void					whitescale_filter(char *image);
+void					whitegreyscale_filter(char *image);
+void					natural_whitegreyscale_filter(char *image);
+void					controls(t_rt *rt);
+void					putbutton(t_rt *rt, int x, int y);
+void					putbutton_l(t_rt *rt, int x, int y);
+void					putbutton_w(t_rt *rt, int x, int y);
+void					putnumpad(t_rt *rt);
+void					rt_memdel(t_rt **rt);
 
 #endif
